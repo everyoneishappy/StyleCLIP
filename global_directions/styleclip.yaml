@@ -1,6 +1,7 @@
-name: TF36
-channels:
+name: styleclip
+condachannels:
   - defaults
+  - pytorch
 dependencies:
   - certifi=2018.11.29
   - pip=18.1
@@ -79,5 +80,5 @@ dependencies:
     - werkzeug==1.0.1
     - wrapt==1.12.1
     - zipp==3.1.0
-prefix: C:\Users\Kyle\.conda\envs\TF36
+
 
