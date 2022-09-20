@@ -2,14 +2,14 @@ name: TF36
 channels:
   - defaults
 dependencies:
-  - certifi=2018.11.29=py36_0
-  - pip=18.1=py36_0
-  - python=3.6.7=h9f7ef89_2
-  - sqlite=3.26.0=he774522_0
-  - vc=14.1=h0510ff6_4
-  - vs2015_runtime=14.15.26706=h3a45250_0
-  - wheel=0.32.3=py36_0
-  - wincertstore=0.2=py36h7fe50ca_0
+  - certifi=2018.11.29
+  - pip=18.1
+  - python=3.6.7
+  - sqlite=3.26.0
+  - vc=14.1
+  - vs2015_runtime=14.15.26706
+  - wheel=0.32.3
+  - wincertstore=0.2
   - pip:
     - absl-py==0.9.0
     - astor==0.8.1
