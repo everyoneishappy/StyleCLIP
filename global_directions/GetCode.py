@@ -12,7 +12,7 @@ import argparse
 def LoadModel(dataset_name):
     # Initialize TensorFlow.
     tflib.init_tf()
-    model_path='./model/'
+    model_path='model/'
     model_name=dataset_name+'.pkl'
     
     tmp=os.path.join(model_path,model_name)
@@ -96,13 +96,14 @@ def GetCode(Gs,random_state,num_img,num_once,dataset_name):
                 dlatents[(i*num_once):((i+1)*num_once),:]=src_dlatents
     print('get all z and w')
     
-    tmp='./npy/'+dataset_name+'/W'
+    tmp='npy/'+dataset_name+'/W'
+    os.makedirs(tmp, exist_ok=True)
     np.save(tmp,dlatents)
 
     
 def GetImg(Gs,num_img,num_once,dataset_name,save_name='images'):
     print('Generate Image')
-    tmp='./npy/'+dataset_name+'/W.npy'
+    tmp='npy/'+dataset_name+'/W.npy'
     dlatents=np.load(tmp) 
     fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
     
@@ -123,12 +124,12 @@ def GetImg(Gs,num_img,num_once,dataset_name,save_name='images'):
         
     all_images=np.concatenate(all_images)
     
-    tmp='./npy/'+dataset_name+'/'+save_name
+    tmp='npy/'+dataset_name+'/'+save_name
     np.save(tmp,all_images)
 
 def GetS(dataset_name,num_img):
     print('Generate S')
-    tmp='./npy/'+dataset_name+'/W.npy'
+    tmp='npy/'+dataset_name+'/W.npy'
     dlatents=np.load(tmp)[:num_img]
     
     with tf.Session() as sess:
@@ -202,8 +203,8 @@ if __name__ == "__main__":
         os.system('wget ' +url+name + '  -P  ./model/')
         os.system('mv ./model/'+name+' ./model/'+dataset_name+'.pkl')
     
-    if not os.path.isdir('./npy/'+dataset_name):
-        os.system('mkdir ./npy/'+dataset_name)
+    if not os.path.isdir('npy/'+dataset_name):
+        os.system('mkdir npy/'+dataset_name)
     
     if args.code_type=='w':
         Gs=LoadModel(dataset_name=dataset_name)
@@ -212,7 +213,7 @@ if __name__ == "__main__":
     elif args.code_type=='s':
         save_name='S'
         save_tmp=GetS(dataset_name,num_img=2_000)
-        tmp='./npy/'+dataset_name+'/'+save_name
+        tmp='npy/'+dataset_name+'/'+save_name
         with open(tmp, "wb") as fp:
             pickle.dump(save_tmp, fp)
         
@@ -222,7 +223,7 @@ if __name__ == "__main__":
         m,std=GetCodeMS(dlatents)
         save_tmp=[m,std]
         save_name='S_mean_std'
-        tmp='./npy/'+dataset_name+'/'+save_name
+        tmp='npy/'+dataset_name+'/'+save_name
         with open(tmp, "wb") as fp:
             pickle.dump(save_tmp, fp)
     
